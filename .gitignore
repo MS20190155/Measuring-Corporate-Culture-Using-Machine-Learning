@@ -1,0 +1,6 @@
+.vscode/settings.json
+.DS_Store
+__pycache__/
+data/processed/
+models/
+outputs/
