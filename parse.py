@@ -1,15 +1,17 @@
-import sys
-import global_options
-from pathlib import Path
-from culture import preprocess, file_util
-from stanfordnlp.server import CoreNLPClient
-from functools import partial
-from multiprocessing import Pool
+import datetime
 import itertools
 import os
-from tqdm import tqdm
+import sys
+from functools import partial
+from multiprocessing import Pool
+from pathlib import Path
+
 import pandas as pd
-import datetime
+from stanfordnlp.server import CoreNLPClient
+from tqdm import tqdm
+
+import global_options
+from culture import file_util, preprocess
 
 
 def process_line(line, lineID):
@@ -27,7 +29,8 @@ def process_line(line, lineID):
         sentences_processed, doc_sent_ids = corpus_preprocessor.process_document(
             line, lineID
         )
-    except:
+    except Exception as e:
+        print(e)
         print("Exception in line: {}".format(lineID))
     return "\n".join(sentences_processed), "\n".join(doc_sent_ids)
 
@@ -38,7 +41,7 @@ def process_largefile(
     input_file_ids,
     output_index_file,
     function_name,
-    chunk_size=1000,
+    chunk_size=100,
     start_index=None,
 ):
     """ A helper function that transforms an input file + a list of IDs of each line (documents + document_IDs) to two output files (processed documents + processed document IDs) by calling function_name on chunks of the input files. Each document can be decomposed into multiple processed documents (e.g. sentences). 
@@ -112,6 +115,7 @@ if __name__ == "__main__":
         memory=global_options.RAM_CORENLP,
         threads=global_options.N_CORES,
         timeout=12000000,
+        max_char_length=1000000,
     ) as client:
         corpus_preprocessor = preprocess.preprocessor(client)
         in_file = Path(global_options.DATA_FOLDER, "input", "documents.txt")
@@ -132,5 +136,5 @@ if __name__ == "__main__":
             input_file_ids=in_file_index,
             output_index_file=output_index_file,
             function_name=process_line,
+            chunk_size=global_options.PARSE_CHUNK_SIZE,
         )
-

@@ -9,9 +9,9 @@ The code is tested in Ubuntu 18.04 and macOS Catalina.
 The code requres 
 - `Python 3.6+`
 - The required Python packages can be installed via `pip install -r requirements.txt`
-- Download and uncompress the [Stanford CoreNLP](https://stanfordnlp.github.io/CoreNLP/download.html). Either [set the environment variable to the location of the uncompressed folder](https://stanfordnlp.github.io/stanfordnlp/corenlp_client.html), or edit the following line in the `global_options.py` to the location of the uncompressed folder, for example: 
+- Download and uncompress [Stanford CoreNLP v3.9.2](http://nlp.stanford.edu/software/stanford-corenlp-full-2018-10-05.zip). Newer versions may work, but they are not tested. Either [set the environment variable to the location of the uncompressed folder](https://stanfordnlp.github.io/stanfordnlp/corenlp_client.html), or edit the following line in the `global_options.py` to the location of the uncompressed folder, for example: 
 > os.environ["CORENLP_HOME"] = "/home/user/stanford-corenlp-full-2018-10-05/"
-
+- Make sure [requirements for CoreNLP](https://stanfordnlp.github.io/CoreNLP/) is met. For example, you need to have Java installed.
 
 ## Data
 We included some example data in the `data/input/` folder. The three files are

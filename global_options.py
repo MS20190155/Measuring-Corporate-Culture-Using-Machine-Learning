@@ -1,20 +1,21 @@
 """Global options for analysis
 """
-from pathlib import Path
 import os
-from typing import Optional, List, Set, Dict
+from pathlib import Path
+from typing import Dict, List, Optional, Set
 
 # Hardware options
 N_CORES: int = 2  # max number of CPU cores to use
-RAM_CORENLP: str = "16G"  # max RAM allocated for parsing using CoreNLP
+RAM_CORENLP: str = "8G"  # max RAM allocated for parsing using CoreNLP
+PARSE_CHUNK_SIZE: int = 100 # number of lines in the input file to process uing CoreNLP at once. Increase on workstations with larger RAM (e.g. to 1000 if RAM is 64G)  
 
 # Directory locations
 os.environ[
     "CORENLP_HOME"
-] = "/home/mai/stanfordnlp_resources/coreNLP/"  # location of the CoreNLP models
+] = "/Users/mai/stanford-corenlp-full-2020-04-20"  # location of the CoreNLP models
 DATA_FOLDER: str = "data/"
-MODEL_FOLDER: str = "models/"
-OUTPUT_FOLDER: str = "outputs/"
+MODEL_FOLDER: str = "models/" # will be created if does not exist
+OUTPUT_FOLDER: str = "outputs/" # will be created if does not exist
 
 # Parsing and analysis options
 STOPWORDS: Set[str] = set(
