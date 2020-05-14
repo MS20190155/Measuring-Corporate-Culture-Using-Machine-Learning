@@ -1,13 +1,15 @@
-import os
-from pathlib import Path
-import global_options
-from culture import file_util, culture_dictionary
-import pandas as pd
 import itertools
-from operator import itemgetter
-from collections import defaultdict
-from tqdm import tqdm as tqdm
+import os
 import pickle
+from collections import defaultdict
+from operator import itemgetter
+from pathlib import Path
+
+import pandas as pd
+from tqdm import tqdm as tqdm
+
+import global_options
+from culture import culture_dictionary, file_util
 
 # @TODO: The scoring functions are not memory friendly. The entire pocessed corpus needs to fit in the RAM. Rewrite a memory friendly version.
 
@@ -167,10 +169,6 @@ def score_tf_idf(documents, doc_ids, N_doc, method, expanded_dict, **kwargs):
         )
 
 
-def aggregate_to_firms():
-    pass
-
-
 if __name__ == "__main__":
     current_dict_path = str(
         str(Path(global_options.OUTPUT_FOLDER, "dict", "expanded_dict.csv"))
@@ -206,4 +204,3 @@ if __name__ == "__main__":
             normalize=False,
             word_weights=word_sim_weights,
         )
-

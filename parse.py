@@ -6,9 +6,7 @@ from functools import partial
 from multiprocessing import Pool
 from pathlib import Path
 
-import pandas as pd
 from stanfordnlp.server import CoreNLPClient
-from tqdm import tqdm
 
 import global_options
 from culture import file_util, preprocess
@@ -119,10 +117,8 @@ if __name__ == "__main__":
     ) as client:
         corpus_preprocessor = preprocess.preprocessor(client)
         in_file = Path(global_options.DATA_FOLDER, "input", "documents.txt")
-        in_file_index = (
+        in_file_index = file_util.file_to_list(
             Path(global_options.DATA_FOLDER, "input", "document_ids.txt")
-            .read_text()
-            .split()
         )
         out_file = Path(
             global_options.DATA_FOLDER, "processed", "parsed", "documents.txt"
