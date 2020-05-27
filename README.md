@@ -1,7 +1,9 @@
 # Measuring Corporate Culture Using Machine Learning
 
 ## Introduction
-The repository implements the method described in the paper "Measuring Corporate Culture Using Machine Learning" by Authors (blinded). 
+The repository implements the method described in the paper 
+
+Li, K., Mai, F., Shen, R., & Yan, X. (2020). [Measuring corporate culture using machine learning](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3256608). _Review of Financial Studies_, forthcoming. 
 
 The code is tested in Ubuntu 18.04 and macOS Catalina.  
 
