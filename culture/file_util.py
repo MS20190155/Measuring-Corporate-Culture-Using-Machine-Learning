@@ -18,7 +18,7 @@ def line_counter(a_file):
         int -- number of lines in the file
     """
     n_lines = 0
-    with open(a_file, "r") as f:
+    with open(a_file, "rb") as f:
         n_lines = sum(1 for _ in f)
     return n_lines
 
@@ -32,23 +32,24 @@ def file_to_list(a_file):
     Returns:
         [str] -- list of lines in the input file, can be empty
     """
-    doc_ids = []
-    with open(a_file) as f:
+    file_content = []
+    with open(a_file, "rb") as f:
         for l in f:
-            doc_ids.append(l.strip())
-    return doc_ids
+            file_content.append(l.decode(encoding="utf-8").strip())
+    return file_content
 
 
 def list_to_file(list, a_file, validate=True):
     """Write a list to a file, each element in a line
-    The strings needs to have no "\n"
+    The strings needs to have no line break "\n" or they will be removed
     
     Keyword Arguments:
         validate {bool} -- check if number of lines in the file
             equals to the length of the list (default: {True})
     """
-    with open(a_file, "w", 8192000) as f:
+    with open(a_file, "w", 8192000, encoding="utf-8") as f:
         for e in list:
+            e = str(e).replace("\n", " ")
             f.write("{}\n".format(e))
     if validate:
         assert line_counter(a_file) == len(list)
