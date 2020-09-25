@@ -3,7 +3,8 @@
 ## Introduction
 The repository implements the method described in the paper 
 
-Li, K., Mai, F., Shen, R., & Yan, X. (2020). [Measuring corporate culture using machine learning](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3256608). _Review of Financial Studies_, forthcoming. 
+Kai Li, Feng Mai, Rui Shen, Xinyan Yan, [__Measuring Corporate Culture Using Machine Learning__](https://academic.oup.com/rfs/advance-article-abstract/doi/10.1093/rfs/hhaa079/5869446?redirectedFrom=fulltext), _The Review of Financial Studies_, 2020; DOI:[10.1093/rfs/hhaa079](http://dx.doi.org/10.1093/rfs/hhaa079) 
+[[Available at SSRN]](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3256608)
 
 The code is tested in Ubuntu 18.04 and macOS Catalina.  
 
