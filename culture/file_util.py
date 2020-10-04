@@ -49,7 +49,7 @@ def list_to_file(list, a_file, validate=True):
     """
     with open(a_file, "w", 8192000, encoding="utf-8") as f:
         for e in list:
-            e = str(e).replace("\n", " ")
+            e = str(e).replace("\n", " ").replace("\r", " ")
             f.write("{}\n".format(e))
     if validate:
         assert line_counter(a_file) == len(list)
