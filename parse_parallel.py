@@ -1,33 +1,16 @@
+"""Implementation of parse.py that supports multiprocess
+Main differences are 1) using Pool.starmap in process_largefile and 2) attach to local CoreNLP server in process_largefile.process_document
+"""
 import datetime
 import itertools
 import os
+from multiprocessing import Pool
 from pathlib import Path
 
 from stanfordnlp.server import CoreNLPClient
 
 import global_options
-from culture import file_util, preprocess
-
-
-def process_line(line, lineID):
-    """Process each line and return a tuple of sentences, sentence_IDs, 
-    
-    Arguments:
-        line {str} -- a document 
-        lineID {str} -- the document ID
-    
-    Returns:
-        str, str -- processed document with each sentence in a line, 
-                    sentence IDs with each in its own line: lineID_0 lineID_1 ...
-    """
-    try:
-        sentences_processed, doc_sent_ids = corpus_preprocessor.process_document(
-            line, lineID
-        )
-    except Exception as e:
-        print(e)
-        print("Exception in line: {}".format(lineID))
-    return "\n".join(sentences_processed), "\n".join(doc_sent_ids)
+from culture import file_util, preprocess_parallel
 
 
 def process_largefile(
@@ -86,12 +69,12 @@ def process_largefile(
             next_n_line_ids = list(filter(None.__ne__, next_n_line_ids))
             output_lines = []
             output_line_ids = []
-            # Use parse_parallel.py to speed things up
-            for output_line, output_line_id in map(
-                function_name, next_n_lines, next_n_line_ids
-            ):
-                output_lines.append(output_line)
-                output_line_ids.append(output_line_id)
+            with Pool(global_options.N_CORES) as pool:
+                for output_line, output_line_id in pool.starmap(
+                    function_name, zip(next_n_lines, next_n_line_ids)
+                ):
+                    output_lines.append(output_line)
+                    output_line_ids.append(output_line_id)
             output_lines = "\n".join(output_lines) + "\n"
             output_line_ids = "\n".join(output_line_ids) + "\n"
             with open(output_file, "a", newline="\n") as f_out:
@@ -110,9 +93,9 @@ if __name__ == "__main__":
         memory=global_options.RAM_CORENLP,
         threads=global_options.N_CORES,
         timeout=12000000,
+        endpoint="http://localhost:9002",  # change port here and in preprocess_parallel.py if 9002 is occupied
         max_char_length=1000000,
     ) as client:
-        corpus_preprocessor = preprocess.preprocessor(client)
         in_file = Path(global_options.DATA_FOLDER, "input", "documents.txt")
         in_file_index = file_util.file_to_list(
             Path(global_options.DATA_FOLDER, "input", "document_ids.txt")
@@ -128,6 +111,6 @@ if __name__ == "__main__":
             output_file=out_file,
             input_file_ids=in_file_index,
             output_index_file=output_index_file,
-            function_name=process_line,
+            function_name=preprocess_parallel.process_document,
             chunk_size=global_options.PARSE_CHUNK_SIZE,
         )
