@@ -1,9 +1,6 @@
 import datetime
 import itertools
 import os
-import sys
-from functools import partial
-from multiprocessing import Pool
 from pathlib import Path
 
 from stanfordnlp.server import CoreNLPClient
@@ -89,19 +86,13 @@ def process_largefile(
             next_n_line_ids = list(filter(None.__ne__, next_n_line_ids))
             output_lines = []
             output_line_ids = []
-            if global_options.WINDOWS is False:
-                with Pool(global_options.N_CORES) as pool:
-                    for output_line, output_line_id in pool.starmap(
-                        function_name, zip(next_n_lines, next_n_line_ids)
-                    ):
-                        output_lines.append(output_line)
-                        output_line_ids.append(output_line_id)
-            else:
-                for output_line, output_line_id in map(
-                    function_name, next_n_lines, next_n_line_ids
-                ):
-                    output_lines.append(output_line)
-                    output_line_ids.append(output_line_id)
+            # @todo: need better ways to parallelize parsing (multiprocessing.starmap no longer compatible
+            # with corenlp in py3.8)
+            for output_line, output_line_id in map(
+                function_name, next_n_lines, next_n_line_ids
+            ):
+                output_lines.append(output_line)
+                output_line_ids.append(output_line_id)
             output_lines = "\n".join(output_lines) + "\n"
             output_line_ids = "\n".join(output_line_ids) + "\n"
             with open(output_file, "a", newline="\n") as f_out:

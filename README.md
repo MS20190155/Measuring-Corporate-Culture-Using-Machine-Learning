@@ -6,7 +6,7 @@ The repository implements the method described in the paper
 Kai Li, Feng Mai, Rui Shen, Xinyan Yan, [__Measuring Corporate Culture Using Machine Learning__](https://academic.oup.com/rfs/advance-article-abstract/doi/10.1093/rfs/hhaa079/5869446?redirectedFrom=fulltext), _The Review of Financial Studies_, 2020; DOI:[10.1093/rfs/hhaa079](http://dx.doi.org/10.1093/rfs/hhaa079) 
 [[Available at SSRN]](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3256608)
 
-The code is tested on Ubuntu 18.04 and macOS Catalina, with very limited testing on Windows 10.  
+The code is tested on Ubuntu 18.04 and macOS Catalina, with limited testing on Windows 10.  
 
 ## Requirement
 The code requres 
@@ -29,9 +29,8 @@ We included some example data in the `data/input/` folder. The three files are
 
 ## Before running the code
 You can config global options in the `global_options.py`. The most important options are perhaps:
-- Set `WINDOWS = True` if you are using Windows as opposed to Mac/Linux. Linux/Mac is recommended (see [this issue](https://github.com/MS20190155/Measuring-Corporate-Culture-Using-Machine-Learning/issues/2)). 
 - The RAM allocated for CoreNLP
-- The number of CPU cores for parallel processing
+- The number of CPU cores for CoreNLP parsing and model training
 - The seed words
 - The max number of words to include in each dimension. Note that after filtering and deduplication (each word can only be loaded under a single dimension), the number of words will be smaller. 
 
