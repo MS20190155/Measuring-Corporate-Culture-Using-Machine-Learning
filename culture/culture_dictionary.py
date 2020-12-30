@@ -1,18 +1,18 @@
-import pandas as pd
-from collections import Counter, OrderedDict
-import gensim
-import pickle
 import itertools
-import numpy as np
-from multiprocessing import Pool
+import math
+import os
+import pickle
+import statistics as s
+from collections import Counter, OrderedDict, defaultdict
 from functools import partial
 from itertools import repeat
-import os
-import tqdm
+from multiprocessing import Pool
 from operator import itemgetter
-import statistics as s
-import math
-from collections import defaultdict
+
+import gensim
+import numpy as np
+import pandas as pd
+import tqdm
 from sklearn import preprocessing
 
 
@@ -140,8 +140,6 @@ def deduplicate_keywords(word2vec_model, expanded_words, seed_words):
     """
     If a word cross-loads, choose the most similar dimension. Return a deduplicated dict. 
     """
-    from collections import Counter
-
     word_counter = Counter()
 
     for dimension in expanded_words:

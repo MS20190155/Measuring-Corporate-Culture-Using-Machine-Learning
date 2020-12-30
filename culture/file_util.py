@@ -1,11 +1,12 @@
+import datetime
 import itertools
 import os
 import sys
-from pathlib import Path
 from multiprocessing import Pool, freeze_support
-from tqdm import tqdm
+from pathlib import Path
+
 import pandas as pd
-import datetime
+from tqdm import tqdm
 
 
 def line_counter(a_file):
@@ -47,7 +48,7 @@ def list_to_file(list, a_file, validate=True):
         validate {bool} -- check if number of lines in the file
             equals to the length of the list (default: {True})
     """
-    with open(a_file, "w", 8192000, encoding="utf-8") as f:
+    with open(a_file, "w", 8192000, encoding="utf-8", newline="\n") as f:
         for e in list:
             e = str(e).replace("\n", " ").replace("\r", " ")
             f.write("{}\n".format(e))

@@ -69,7 +69,7 @@ def process_largefile(
         input_file_ids
     ), "Make sure the input file has the same number of rows as the input ID file. "
 
-    with open(input_file) as f_in:
+    with open(input_file, newline="\n", encoding="utf-8", errors="ignore") as f_in:
         line_i = 0
         # jump to index
         if start_index is not None:
@@ -84,23 +84,30 @@ def process_largefile(
         ):
             line_i += chunk_size
             print(datetime.datetime.now())
-            print("Processing " + str(line_i) + " lines.")
+            print(f"Processing line: {line_i}.")
             next_n_lines = list(filter(None.__ne__, next_n_lines))
             next_n_line_ids = list(filter(None.__ne__, next_n_line_ids))
             output_lines = []
             output_line_ids = []
-            with Pool(global_options.N_CORES) as pool:
-                for output_line, output_line_id in pool.starmap(
-                    function_name, zip(next_n_lines, next_n_line_ids)
+            if global_options.WINDOWS is False:
+                with Pool(global_options.N_CORES) as pool:
+                    for output_line, output_line_id in pool.starmap(
+                        function_name, zip(next_n_lines, next_n_line_ids)
+                    ):
+                        output_lines.append(output_line)
+                        output_line_ids.append(output_line_id)
+            else:
+                for output_line, output_line_id in map(
+                    function_name, next_n_lines, next_n_line_ids
                 ):
                     output_lines.append(output_line)
                     output_line_ids.append(output_line_id)
-                output_lines = "\n".join(output_lines) + "\n"
-                output_line_ids = "\n".join(output_line_ids) + "\n"
-            with open(output_file, "a") as f_out:
+            output_lines = "\n".join(output_lines) + "\n"
+            output_line_ids = "\n".join(output_line_ids) + "\n"
+            with open(output_file, "a", newline="\n") as f_out:
                 f_out.write(output_lines)
             if output_index_file is not None:
-                with open(output_index_file, "a") as f_out:
+                with open(output_index_file, "a", newline="\n") as f_out:
                     f_out.write(output_line_ids)
 
 

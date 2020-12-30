@@ -1,15 +1,18 @@
 import sys
+
 sys.path.append("..")
-import global_options
-import gensim
-from gensim import models
-import tqdm
+import concurrent.futures
+import datetime
 from functools import partial
 from multiprocessing import Pool, freeze_support
-from . import file_util
 from pathlib import Path
-import datetime
-import concurrent.futures
+
+import gensim
+import global_options
+import tqdm
+from gensim import models
+
+from . import file_util
 
 
 def train_bigram_model(input_path, model_path):
@@ -42,7 +45,7 @@ def train_bigram_model(input_path, model_path):
 
 def bigram_transform(line, bigram_phraser):
     """ Helper file fore file_bigramer
-    Note: Needs a phraser object in the enviroment.
+    Note: Needs a phraser object or phrase model.
 
     Arguments:
         line {str}: a line 

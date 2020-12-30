@@ -6,15 +6,19 @@ The repository implements the method described in the paper
 Kai Li, Feng Mai, Rui Shen, Xinyan Yan, [__Measuring Corporate Culture Using Machine Learning__](https://academic.oup.com/rfs/advance-article-abstract/doi/10.1093/rfs/hhaa079/5869446?redirectedFrom=fulltext), _The Review of Financial Studies_, 2020; DOI:[10.1093/rfs/hhaa079](http://dx.doi.org/10.1093/rfs/hhaa079) 
 [[Available at SSRN]](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3256608)
 
-The code is tested in Ubuntu 18.04 and macOS Catalina.  
+The code is tested on Ubuntu 18.04 and macOS Catalina, with very limited testing on Windows 10.  
 
 ## Requirement
 The code requres 
 - `Python 3.6+`
 - The required Python packages can be installed via `pip install -r requirements.txt`
 - Download and uncompress [Stanford CoreNLP v3.9.2](http://nlp.stanford.edu/software/stanford-corenlp-full-2018-10-05.zip). Newer versions may work, but they are not tested. Either [set the environment variable to the location of the uncompressed folder](https://stanfordnlp.github.io/stanfordnlp/corenlp_client.html), or edit the following line in the `global_options.py` to the location of the uncompressed folder, for example: 
-> os.environ["CORENLP_HOME"] = "/home/user/stanford-corenlp-full-2018-10-05/"
-- Make sure [requirements for CoreNLP](https://stanfordnlp.github.io/CoreNLP/) are met. For example, you need to have Java installed.
+> os.environ["CORENLP_HOME"] = "/home/user/stanford-corenlp-full-2018-10-05/"   
+
+- If you are using Windows, use "/" instead of "\\" to separate directories.  
+- Make sure [requirements for CoreNLP](https://stanfordnlp.github.io/CoreNLP/) are met. For example, you need to have Java installed (if you are using Windows, install [Windows Offline (64-bit) version](https://java.com/en/download/manual.jsp)). To check if CoreNLP is set up correctly, use command line (terminal) to navigate to the project root folder and run `python -m culture.preprocess`. You should see parsed outputs from a single sentence printed after a moment:
+
+    (['when[pos:WRB] I[pos:PRP] be[pos:VBD] a[pos:DT]....
 
 ## Data
 We included some example data in the `data/input/` folder. The three files are
@@ -25,14 +29,15 @@ We included some example data in the `data/input/` folder. The three files are
 
 ## Before running the code
 You can config global options in the `global_options.py`. The most important options are perhaps:
+- Set `WINDOWS = True` if you are using Windows as opposed to Mac/Linux. Linux/Mac is recommended (see [this issue](https://github.com/MS20190155/Measuring-Corporate-Culture-Using-Machine-Learning/issues/2)). 
 - The RAM allocated for CoreNLP
-- The number of CPU cores
+- The number of CPU cores for parallel processing
 - The seed words
 - The max number of words to include in each dimension. Note that after filtering and deduplication (each word can only be loaded under a single dimension), the number of words will be smaller. 
 
 
 ## Running the code
-1. Use `python parse.py` to use Stanford CoreNLP to parse the raw documents. The parsed files are output in the `data/processed/parsed/` folder:
+1. Use `python parse.py` to use Stanford CoreNLP to parse the raw documents. This step is relatvely slow so multiple CPU cores is recommended. The parsed files are output in the `data/processed/parsed/` folder:
     - `documents.txt`: Each line is a *sentence*. 
     - `document_sent_ids.txt`: Each line is a id in the format of `docID_sentenceID` (e.g. doc0_0, doc0_1, ..., doc1_0, doc1_1, doc1_2, ...). Each line in the file corresponds to `documents.txt`. 
 
