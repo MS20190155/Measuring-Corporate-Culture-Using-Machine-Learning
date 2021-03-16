@@ -15,7 +15,7 @@ os.environ[
 ] = "/Users/mai/stanford-corenlp-full-2018-10-05/"  # location of the CoreNLP models; use / to seperate folders
 DATA_FOLDER: str = "data/"
 MODEL_FOLDER: str = "models/" # will be created if does not exist
-OUTPUT_FOLDER: str = "outputs/" # will be created if does not exist
+OUTPUT_FOLDER: str = "outputs/" # will be created if does not exist; !!! WARNING: existing files will be removed !!!
 
 # Parsing and analysis options
 STOPWORDS: Set[str] = set(
