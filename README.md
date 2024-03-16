@@ -1,18 +1,33 @@
-# Measuring Corporate Culture Using Machine Learning
+# app_corporate_culture_measurer
 
 ## Introduction
-The repository implements the method described in the paper 
-
+restructure [Measuring Corporate Culture Using Machine Learning](https://github.com/MS20190155/Measuring-Corporate-Culture-Using-Machine-Learning).
 Kai Li, Feng Mai, Rui Shen, Xinyan Yan, [__Measuring Corporate Culture Using Machine Learning__](https://academic.oup.com/rfs/advance-article-abstract/doi/10.1093/rfs/hhaa079/5869446?redirectedFrom=fulltext), _The Review of Financial Studies_, 2020; DOI:[10.1093/rfs/hhaa079](http://dx.doi.org/10.1093/rfs/hhaa079) 
 [[Available at SSRN]](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3256608)
 
-The code is tested on Ubuntu 18.04 and macOS Catalina, with limited testing on Windows 10.  
 
-## Requirement
-The code requres 
-- `Python <=3.11`
-- The required Python packages can be installed via `pip install -r requirements.txt`
-- Download and uncompress [Stanford CoreNLP v3.9.2](http://nlp.stanford.edu/software/stanford-corenlp-full-2018-10-05.zip). Newer versions may work, but they are not tested. Either [set the environment variable to the location of the uncompressed folder](https://stanfordnlp.github.io/stanfordnlp/corenlp_client.html), or edit the following line in the `global_options.py` to the location of the uncompressed folder, for example: 
+objective:
+- restructure into REST API driven application. 
+- accept aribitary corpus. 
+- generate an aribitary number of culture frameworks.
+    - generate scores using an aribitary culture framework.
+- explore Word2Vec:
+    - in the context of an application.
+    - how word vector representations are learned.
+    - references:
+        - https://code.google.com/archive/p/word2vec/
+        - https://www.askpython.com/python-modules/gensim-word2vec
+
+## setup instructions:
+1. install `python 3.11` or lower.
+    - [Python Download]: (https://www.python.org/downloads/)
+
+2. clone repo: 
+    ```shell
+    git clone git@github.com:praisetompane/app_corporate_culture_measurer.git
+    ```
+
+3. Download and uncompress [Stanford CoreNLP v3.9.2](http://nlp.stanford.edu/software/stanford-corenlp-full-2018-10-05.zip). Newer versions may work, but they are not tested. Either [set the environment variable to the location of the uncompressed folder](https://stanfordnlp.github.io/stanfordnlp/corenlp_client.html), or edit the following line in the `global_options.py` to the location of the uncompressed folder, for example: 
 > os.environ["CORENLP_HOME"] = "/home/user/stanford-corenlp-full-2018-10-05/"   
 
 - If you are using Windows, use "/" instead of "\\" to separate directories.  
@@ -20,12 +35,39 @@ The code requres
 
     (['when[pos:WRB] I[pos:PRP] be[pos:VBD] a[pos:DT]....
 
+## package management:
+- install pipenv: https://pypi.org/project/pipenv/
+
+## run program:
+- install packages into local environment using pipenv[**only required for first run**]:
+    ```shell
+    pipenv install
+    ```
+- to start system run:
+    ```shell
+    ./run.sh
+    ```
+
+## git conventions:
+- **NB:** the master is locked and all changes must come through a Pull Request.
+- commit messages:
+    - provide concise commit messages that describe what you have done.
+        ```shell
+        # example:
+        git commit -m "feat(core): algorithm" -m"implement my new shiny faster algorithm"
+        ```
+    - screen shot of Githb view
+    - references: 
+        - https://www.conventionalcommits.org/en/v1.0.0/
+        - https://www.freecodecamp.org/news/how-to-write-better-git-commit-messages/
+
+**Disclaimer**: This is still work in progress.
+
 ## Data
 We included some example data in the `data/input/` folder. The three files are
 - `documents.txt`: Each line is a document (e.g., each earnings call). Each document needs to have line breaks remvoed. The file has no header row. 
 - `document_ids.txt`: Each line is document ID (e.g., unique identifier for each earnings call). A document ID cannot have `_` or whitespaces. The file has no header row. 
 - (Optional) `id2firms.csv`: A csv file with three columns (`document_id`:str, `firm_id`:str, `time`:int). The file has a header row. 
-
 
 ## Before running the code
 You can config global options in the `global_options.py`. The most important options are perhaps:
@@ -33,7 +75,6 @@ You can config global options in the `global_options.py`. The most important opt
 - The number of CPU cores for CoreNLP parsing and model training
 - The seed words
 - The max number of words to include in each dimension. Note that after filtering and deduplication (each word can only be loaded under a single dimension), the number of words will be smaller. 
-
 
 ## Running the code
 1. Use `python parse.py` to use Stanford CoreNLP to parse the raw documents. This step is relatvely slow so multiple CPU cores is recommended. The parsed files are output in the `data/processed/parsed/` folder:
