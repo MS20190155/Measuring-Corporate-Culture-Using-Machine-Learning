@@ -1,6 +1,7 @@
 numpy>=1.17.2
 pandas>=0.25.1
-gensim>=3.7.2,<4.0.0 
+gensim>=4.3.2
 tqdm>=4.31.1
 scikit_learn>=0.22.1
 stanfordnlp==0.2.0
+protobuf== 3.19.0

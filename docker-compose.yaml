@@ -1,0 +1,2 @@
+# start standford nlp server:
+# java -Xmx8G -cp ./gateway/stanford-corenlp-full-2018-10-05/* edu.stanford.nlp.pipeline.StanfordCoreNLPServer -port 9000 -timeout 60000 -threads 1 -maxCharLength 100000 -quiet True -serverProperties corenlp_server-8daf38f310784967.props -preload tokenize, ssplit, pos, lemma, ner, depparse

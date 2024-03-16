@@ -10,7 +10,7 @@ The code is tested on Ubuntu 18.04 and macOS Catalina, with limited testing on W
 
 ## Requirement
 The code requres 
-- `Python 3.6+`
+- `Python <=3.11`
 - The required Python packages can be installed via `pip install -r requirements.txt`
 - Download and uncompress [Stanford CoreNLP v3.9.2](http://nlp.stanford.edu/software/stanford-corenlp-full-2018-10-05.zip). Newer versions may work, but they are not tested. Either [set the environment variable to the location of the uncompressed folder](https://stanfordnlp.github.io/stanfordnlp/corenlp_client.html), or edit the following line in the `global_options.py` to the location of the uncompressed folder, for example: 
 > os.environ["CORENLP_HOME"] = "/home/user/stanford-corenlp-full-2018-10-05/"   
