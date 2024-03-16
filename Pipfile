@@ -1,0 +1,18 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+numpy = ">=1.17.2"
+pandas = ">=0.25.1"
+gensim = ">=4.3.2"
+tqdm = ">=4.31.1"
+scikit-learn = ">=0.22.1"
+stanfordnlp = "==0.2.0"
+protobuf = "==3.19.0"
+
+[dev-packages]
+
+[requires]
+python_version = "3.11"
