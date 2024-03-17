@@ -10,13 +10,23 @@ objective:
 - restructure into REST API driven application. 
 - accept aribitary corpus. 
 - generate an aribitary number of culture frameworks.
-    - generate scores using an aribitary culture framework.
 - explore Word2Vec:
     - in the context of an application.
     - how word vector representations are learned.
     - references:
         - https://code.google.com/archive/p/word2vec/
         - https://www.askpython.com/python-modules/gensim-word2vec
+- generate culture frameworks based on various corpora:
+    - quarterly financial reports
+    - company websites
+    - google|yelp reviews
+    - ...
+- score companies:
+    - S&P 500
+    - SA Top 40
+    - SA SMEs
+    - SA Startups
+    - YC Startups
 
 ## setup instructions:
 1. install `python 3.11` or lower.
@@ -62,7 +72,7 @@ objective:
         - https://www.freecodecamp.org/news/how-to-write-better-git-commit-messages/
 
 **Disclaimer**: This is still work in progress.
-
+======================================================================================================================================================
 ## Data
 We included some example data in the `data/input/` folder. The three files are
 - `documents.txt`: Each line is a document (e.g., each earnings call). Each document needs to have line breaks remvoed. The file has no header row. 
