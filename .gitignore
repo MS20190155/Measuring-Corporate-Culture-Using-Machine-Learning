@@ -2,6 +2,7 @@
 .DS_Store
 __pycache__/
 data/processed/
+data/processed_backup/
 models/
 outputs/
 *.props
