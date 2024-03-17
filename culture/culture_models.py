@@ -37,7 +37,7 @@ def train_bigram_model(input_path, model_path):
         min_count=global_options.PHRASE_MIN_COUNT,
         scoring="default",
         threshold=global_options.PHRASE_THRESHOLD,
-        common_terms=global_options.STOPWORDS,
+        connector_words=global_options.STOPWORDS,
     )
     bigram_model.save(str(model_path))
     return bigram_model
@@ -90,5 +90,6 @@ def train_w2v_model(input_path, model_path, *args, **kwargs):
     corpus_confcall = gensim.models.word2vec.PathLineSentences(
         str(input_path), max_sentence_length=10000000
     )
+    print(corpus_confcall)
     model = gensim.models.Word2Vec(corpus_confcall, *args, **kwargs)
     model.save(str(model_path))

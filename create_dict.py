@@ -13,7 +13,7 @@ model = gensim.models.Word2Vec.load(
     str(Path(global_options.MODEL_FOLDER, "w2v", "w2v.mod"))
 )
 
-vocab_number = len(model.wv.vocab)
+vocab_number = len(model.wv.key_to_index)
 print("Vocab size in the w2v model: {}".format(vocab_number))
 
 # expand dictionary
@@ -42,4 +42,3 @@ culture_dictionary.write_dict_to_csv(
     file_name=str(Path(global_options.OUTPUT_FOLDER, "dict", "expanded_dict.csv")),
 )
 print("Dictionary saved at {}".format(str(Path(global_options.OUTPUT_FOLDER, "dict", "expanded_dict.csv"))))
-

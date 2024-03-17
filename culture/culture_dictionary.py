@@ -40,7 +40,7 @@ def expand_words_dimension_mean(
     Returns:
         dict[str, set] -- expanded words, a dict of {dimension: set([words])}
     """
-    vocab_number = len(word2vec_model.wv.vocab)
+    vocab_number = len(word2vec_model.wv.key_to_index)
     expanded_words = {}
     all_seeds = set()
     for dim in seed_words.keys():
@@ -49,7 +49,9 @@ def expand_words_dimension_mean(
         restrict = int(vocab_number * restrict)
     for dimension in seed_words:
         dimension_words = [
-            word for word in seed_words[dimension] if word in word2vec_model.wv.vocab
+            word
+            for word in seed_words[dimension]
+            if word in word2vec_model.wv.key_to_index
         ]
         if len(dimension_words) > 0:
             similar_words = [
@@ -81,11 +83,11 @@ def rank_by_sim(expanded_words, seed_words, model) -> "dict[str: list]":
     expanded_words_sorted = dict()
     for dimension in expanded_words.keys():
         dimension_seed_words = [
-            word for word in seed_words[dimension] if word in model.wv.vocab
+            word for word in seed_words[dimension] if word in model.wv.key_to_index
         ]
         similarity_dict = dict()
         for w in expanded_words[dimension]:
-            if w in model.wv.vocab:
+            if w in model.wv.key_to_index:
                 similarity_dict[w] = model.wv.n_similarity(dimension_seed_words, [w])
             else:
                 # print(w + "is not in w2v model")
@@ -146,7 +148,7 @@ def deduplicate_keywords(word2vec_model, expanded_words, seed_words):
         word_counter.update(list(expanded_words[dimension]))
     for dimension in seed_words:
         for w in seed_words[dimension]:
-            if w not in word2vec_model.wv.vocab:
+            if w not in word2vec_model.wv.key_to_index:
                 seed_words[dimension].remove(w)
 
     word_counter = {k: v for k, v in word_counter.items() if v > 1}  # duplicated words
@@ -160,7 +162,7 @@ def deduplicate_keywords(word2vec_model, expanded_words, seed_words):
             dimension_seed_words = [
                 word
                 for word in seed_words[dimension]
-                if word in word2vec_model.wv.vocab
+                if word in word2vec_model.wv.key_to_index
             ]
             # sim_w_dim[dimension] = max([word2vec_model.wv.n_similarity([word], [x]) for x in seed_words[dimension]] )
             sim_w_dim[dimension] = word2vec_model.wv.n_similarity(
