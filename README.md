@@ -1,12 +1,12 @@
 # app_corporate_culture_measurer
+![build status](https://github.com/praisetompane/app_corporate_culture_measurer/actions/workflows/app_corporate_culture_measurer.yaml/badge.svg)
 
 ## Introduction
 restructure [Measuring Corporate Culture Using Machine Learning](https://github.com/MS20190155/Measuring-Corporate-Culture-Using-Machine-Learning).
 Kai Li, Feng Mai, Rui Shen, Xinyan Yan, [__Measuring Corporate Culture Using Machine Learning__](https://academic.oup.com/rfs/advance-article-abstract/doi/10.1093/rfs/hhaa079/5869446?redirectedFrom=fulltext), _The Review of Financial Studies_, 2020; DOI:[10.1093/rfs/hhaa079](http://dx.doi.org/10.1093/rfs/hhaa079) 
 [[Available at SSRN]](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3256608)
 
-
-objective:
+objectives:
 - restructure into REST API driven application. 
 - accept aribitary corpus. 
 - generate an aribitary number of culture frameworks.
@@ -28,6 +28,37 @@ objective:
     - SA Startups
     - YC Startups
 
+
+## project structure:
+- docs: project documentation lives in here.
+- src: production code lives in folder and is divided in the modules below:
+    - app_corporate_culture_measurer: project package
+        - api:
+            - the API to the application lives in this module.
+            - the current implementation is a REST API, but a gRPC, CLI API, etc would be implemented in here.
+        - config:
+            - configurable values live in here. 
+            - these are values such as Hand Ranks, Card Ranks.
+                - as the system scales, you could migrate these into a database to allow independently
+                changing config without restarting the application.
+        - core:
+            - the domain logic of the application lives in this module.
+        - gateway:
+            - all external interaction objects(e.g. files, external APIs etc) live in this module.
+        - model:
+            - the domain models for Poker live in this in this module.
+        - app_corporate_culture_measurer.py:
+            entry point to startup the application
+- tests: test code lives in folder.
+    the tests are intentionally separated from production code.
+    - benefits:
+        - tests can run against an installed version after executing `pip install .`.
+        - tests can run against the local copy with an editable install after executing `pip install --edit`.
+        - when using Docker, the entire app_corporate_culture_measurer folder can be copied without needing to exclude tests, which we don't release to PROD.
+    - more in depth discussion here: https://docs.pytest.org/en/latest/explanation/goodpractices.html#choosing-a-test-layout-import-rules
+
+- utilities: any useful scripts, such as curl & postman requests, JSON payloads, software installations, etc.
+
 ## setup instructions:
 1. install `python 3.11` or lower.
     - [Python Download]: (https://www.python.org/downloads/)
@@ -36,7 +67,6 @@ objective:
     ```shell
     git clone git@github.com:praisetompane/app_corporate_culture_measurer.git
     ```
-
 3. Download and uncompress [Stanford CoreNLP v3.9.2](http://nlp.stanford.edu/software/stanford-corenlp-full-2018-10-05.zip). Newer versions may work, but they are not tested. Either [set the environment variable to the location of the uncompressed folder](https://stanfordnlp.github.io/stanfordnlp/corenlp_client.html), or edit the following line in the `global_options.py` to the location of the uncompressed folder, for example: 
 > os.environ["CORENLP_HOME"] = "/home/user/stanford-corenlp-full-2018-10-05/"   
 
@@ -44,20 +74,59 @@ objective:
 - Make sure [requirements for CoreNLP](https://stanfordnlp.github.io/CoreNLP/) are met. For example, you need to have Java installed (if you are using Windows, install [Windows Offline (64-bit) version](https://java.com/en/download/manual.jsp)). To check if CoreNLP is set up correctly, use command line (terminal) to navigate to the project root folder and run `python -m culture.preprocess`. You should see parsed outputs from a single sentence printed after a moment:
 
     (['when[pos:WRB] I[pos:PRP] be[pos:VBD] a[pos:DT]....
-
 ## package management:
 - install pipenv: https://pypi.org/project/pipenv/
-
-## run program:
 - install packages into local environment using pipenv[**only required for first run**]:
     ```shell
     pipenv install
     ```
+## run program:
+
+- activate environment
+    ```shell
+    pipenv shell
+    ```
 - to start system run:
     ```shell
-    ./run.sh
+    ./start_system.sh
     ```
 
+## testing:
+### unit tests:
+- to run tests:
+    - activate environment
+    ```shell
+    pipenv shell
+    ```
+    - run tests
+    ```shell
+    pytest
+    ```
+        
+### end to end tests:
+- The curl request used can be found in `utilities/curl/`.
+    - example:
+    ```shell
+   
+    ```
+    ![end to end curl example](./docs/end_to_end_curl_example.png) <br>
+
+- If Postman requests can be found in `/utilities/postman/app_corporate_culture_measurer.postman_collection.json`.
+    ![end to end postman example](./docs/end_to_end_postman_example.png)
+    - Guide for how to import into Postman: https://learning.postman.com/docs/getting-started/importing-and-exporting/importing-data/
+
+
+## development:
+- to run system in debug mode:
+    ```shell
+    
+    ```
+- running in VSCode:
+    - open the "Run and Debug" view:
+    - click the green play button.
+        - the server will inform you the host and port in the terminal output at the bottom.
+        - from here you debug like normal(i.e. add break points, step into code definitions, evaluate code snippets, etc)
+    ![start system output](./docs/vscode_debugging.png)
 ## git conventions:
 - **NB:** the master is locked and all changes must come through a Pull Request.
 - commit messages:
@@ -70,6 +139,7 @@ objective:
     - references: 
         - https://www.conventionalcommits.org/en/v1.0.0/
         - https://www.freecodecamp.org/news/how-to-write-better-git-commit-messages/
+
 
 **Disclaimer**: This is still work in progress.
 ======================================================================================================================================================
