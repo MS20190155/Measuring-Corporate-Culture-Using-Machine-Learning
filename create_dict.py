@@ -1,4 +1,4 @@
-import global_options
+import app_corporate_culture_measurer.global_options as global_options
 import pandas as pd
 import pickle
 from collections import OrderedDict, Counter

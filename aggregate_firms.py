@@ -2,7 +2,7 @@
 Scores are adjusted by document length (100*score/length)
 """
 
-import global_options
+import app_corporate_culture_measurer.global_options as global_options
 import pandas as pd
 from pathlib import Path
 

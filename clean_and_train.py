@@ -6,8 +6,8 @@ from pathlib import Path
 
 import pandas as pd
 
-import global_options
-import parse
+import app_corporate_culture_measurer.global_options as global_options
+import app_corporate_culture_measurer.preprocess.parse as parse
 from culture import culture_models, file_util, preprocess
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)

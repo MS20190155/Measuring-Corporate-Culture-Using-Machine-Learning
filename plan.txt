@@ -1,5 +1,11 @@
-- create project structure
+- create project structure * 
 - create main app.py that implements what run.sh is doing
+    - python parse.py
+    - python clean_and_train.py
+    - python create_dict.py
+    - python score.py
+    - python aggregate_firms.py
+
 - create a gateway for CoreNLPClient
 - use CoreNLPClient in parse.py and parse_parallel instead of local instantiation
 - ...
@@ -7,3 +13,8 @@
 - ...
 - design and implement datastore data structures
 - build Flask REST endpoints to expose interfaces
+
+
+Legeng:
+    *: first pass
+    **: completed

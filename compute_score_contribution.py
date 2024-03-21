@@ -8,7 +8,7 @@ from pathlib import Path
 import pandas as pd
 from tqdm.auto import tqdm
 
-import global_options
+import app_corporate_culture_measurer.global_options as global_options
 import score
 from culture import culture_dictionary
 
