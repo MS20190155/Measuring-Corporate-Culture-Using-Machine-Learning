@@ -1,7 +1,7 @@
 # Measuring Corporate Culture Using Machine Learning
 
 > [!NOTE]
-> An updated, pip-installable Python package implementing this method is available as
+> As of 2026, an updated, pip-installable Python package implementing this method is available as
 > [lmsy_w2v_rfs](https://github.com/maifeng/lmsy_w2v_rfs), compatible with current Python and gensim.
 >
 > https://github.com/maifeng/lmsy_w2v_rfs
